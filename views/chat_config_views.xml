@@ -30,31 +30,31 @@
         </field>
     </record>
 
-    <!-- Chat Configuration Tree View -->
-    <record id="view_chat_config_tree" model="ir.ui.view">
-        <field name="name">chat.config.tree</field>
+    <!-- Chat Configuration List View -->
+    <record id="view_chat_config_list" model="ir.ui.view">
+        <field name="name">chat.config.list</field>
         <field name="model">chat.config</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name"/>
                 <field name="is_active"/>
                 <field name="webhook_url"/>
-            </tree>
+            </list>
         </field>
     </record>
 
-    <!-- Chat Messages Tree View -->
-    <record id="view_chat_message_tree" model="ir.ui.view">
-        <field name="name">chat.message.tree</field>
+    <!-- Chat Messages List View -->
+    <record id="view_chat_message_list" model="ir.ui.view">
+        <field name="name">chat.message.list</field>
         <field name="model">chat.message</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="session_id"/>
                 <field name="message"/>
                 <field name="is_user"/>
                 <field name="state"/>
                 <field name="create_date"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -89,25 +89,23 @@
         </field>
     </record>
 
-    <!-- Menu Items -->
-    <menuitem id="menu_chat_root" name="Chat Widget" sequence="50"/>
-    
-    <menuitem id="menu_chat_config" name="Configuration" parent="menu_chat_root" 
-              action="action_chat_config" sequence="10"/>
-              
-    <menuitem id="menu_chat_messages" name="Messages" parent="menu_chat_root" 
-              action="action_chat_messages" sequence="20"/>
-
-    <!-- Actions -->
+    <!-- Actions: deben declararse antes de los menús, para evitar errores de referencia -->
     <record id="action_chat_config" model="ir.actions.act_window">
         <field name="name">Chat Configuration</field>
         <field name="res_model">chat.config</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record id="action_chat_messages" model="ir.actions.act_window">
         <field name="name">Chat Messages</field>
         <field name="res_model">chat.message</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
+
+    <!-- Menús -->
+    <menuitem id="menu_chat_root" name="Chat Widget" sequence="50"/>
+    <menuitem id="menu_chat_config" name="Configuration" parent="menu_chat_root"
+              action="action_chat_config" sequence="10"/>
+    <menuitem id="menu_chat_messages" name="Messages" parent="menu_chat_root"
+              action="action_chat_messages" sequence="20"/>
 </odoo>

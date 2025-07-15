@@ -1,20 +1,20 @@
+# __manifest__.py
 {
     'name': 'Chat Widget with Webhook',
     'version': '18.0.1.0.0',
     'category': 'Website',
-    'summary': 'Chat widget with webhook integration for chatbot functionality',
-    'description': '''
-        Chat Widget with Webhook Integration
-        ===================================
-        
-        This module provides:
-        * Chat widget button on website
-        * Popup chat window
-        * Webhook integration for chatbot responses
-        * Admin configuration panel
-        * Enable/disable chat functionality
-        * File attachment support
-    ''',
+    'summary': 'Chat widget with webhook integration',
+    'description': """
+Chat Widget with Webhook Integration
+===================================
+This module provides:
+* Chat widget button on website
+* Popup chat window
+* Webhook integration
+* Admin config panel
+* Enable/disable functionality
+* File attachment support
+""",
     'author': 'dployxperts',
     'website': 'https://dployxperts.com/',
     'depends': ['base', 'website', 'web'],
@@ -31,7 +31,7 @@
         ],
     },
     'installable': True,
-    'application': True,
+    'application': False,
     'auto_install': False,
     'license': 'LGPL-3',
 }
