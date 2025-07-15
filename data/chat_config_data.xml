@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Default Chat Configuration -->
+        <record id="default_chat_config" model="chat.config">
+            <field name="name">Default Chat Configuration</field>
+            <field name="webhook_url">https://n8n.dployxperts.com/webhook-test/665d27c6-4c8f-476a-816c-14c45ea2bd5b</field>
+            <field name="is_active">True</field>
+            <field name="welcome_message">Hola, puedo ayudarte con tus dudas en un Tap Tap</field>
+            <field name="chat_title">Habla con nosotros</field>
+            <field name="chat_subtitle">¿Cómo podemos ayudarte hoy?</field>
+            <field name="button_color">#667eea</field>
+            <field name="header_color">#667eea</field>
+        </record>
+    </data>
+</odoo>

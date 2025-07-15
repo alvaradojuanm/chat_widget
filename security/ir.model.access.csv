@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_chat_config_all,chat.config.all,model_chat_config,,1,0,0,0
+access_chat_config_admin,chat.config.admin,model_chat_config,base.group_system,1,1,1,1
+access_chat_message_all,chat.message.all,model_chat_message,,1,0,0,0
+access_chat_message_admin,chat.message.admin,model_chat_message,base.group_system,1,1,1,1
+
+# ===========================================

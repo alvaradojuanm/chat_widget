@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Chat Configuration Form View -->
+    <record id="view_chat_config_form" model="ir.ui.view">
+        <field name="name">chat.config.form</field>
+        <field name="model">chat.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="is_active"/>
+                            <field name="webhook_url"/>
+                        </group>
+                        <group>
+                            <field name="chat_title"/>
+                            <field name="chat_subtitle"/>
+                            <field name="welcome_message"/>
+                        </group>
+                    </group>
+                    <group string="Appearance">
+                        <group>
+                            <field name="button_color"/>
+                            <field name="header_color"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Chat Configuration Tree View -->
+    <record id="view_chat_config_tree" model="ir.ui.view">
+        <field name="name">chat.config.tree</field>
+        <field name="model">chat.config</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="is_active"/>
+                <field name="webhook_url"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Chat Messages Tree View -->
+    <record id="view_chat_message_tree" model="ir.ui.view">
+        <field name="name">chat.message.tree</field>
+        <field name="model">chat.message</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="session_id"/>
+                <field name="message"/>
+                <field name="is_user"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Chat Messages Form View -->
+    <record id="view_chat_message_form" model="ir.ui.view">
+        <field name="name">chat.message.form</field>
+        <field name="model">chat.message</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="session_id"/>
+                            <field name="is_user"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="create_date"/>
+                        </group>
+                    </group>
+                    <group string="Message">
+                        <field name="message"/>
+                    </group>
+                    <group string="Response">
+                        <field name="response"/>
+                    </group>
+                    <group string="Webhook Response">
+                        <field name="webhook_response"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem id="menu_chat_root" name="Chat Widget" sequence="50"/>
+    
+    <menuitem id="menu_chat_config" name="Configuration" parent="menu_chat_root" 
+              action="action_chat_config" sequence="10"/>
+              
+    <menuitem id="menu_chat_messages" name="Messages" parent="menu_chat_root" 
+              action="action_chat_messages" sequence="20"/>
+
+    <!-- Actions -->
+    <record id="action_chat_config" model="ir.actions.act_window">
+        <field name="name">Chat Configuration</field>
+        <field name="res_model">chat.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_chat_messages" model="ir.actions.act_window">
+        <field name="name">Chat Messages</field>
+        <field name="res_model">chat.message</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
+
+# ===========================================
