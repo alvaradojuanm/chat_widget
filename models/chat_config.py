@@ -28,5 +28,3 @@ class ChatConfig(models.Model):
                 'is_active': True,
             })
         return config
-
-# ===========================================

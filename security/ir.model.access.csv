@@ -3,5 +3,3 @@ access_chat_config_all,chat.config.all,model_chat_config,,1,0,0,0
 access_chat_config_admin,chat.config.admin,model_chat_config,base.group_system,1,1,1,1
 access_chat_message_all,chat.message.all,model_chat_message,,1,0,0,0
 access_chat_message_admin,chat.message.admin,model_chat_message,base.group_system,1,1,1,1
-
-# ===========================================

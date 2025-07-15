@@ -16,7 +16,7 @@
         * File attachment support
     ''',
     'author': 'dployxperts',
-    'website': 'https://www.dployxperts.com',
+    'website': 'https://dployxperts.com/',
     'depends': ['base', 'website', 'web'],
     'data': [
         'security/ir.model.access.csv',
@@ -35,5 +35,3 @@
     'auto_install': False,
     'license': 'LGPL-3',
 }
-
-# ===========================================

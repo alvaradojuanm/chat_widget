@@ -78,5 +78,3 @@ class ChatMessage(models.Model):
                 'webhook_response': str(e)
             })
             return {'error': str(e)}
-
-# ===========================================

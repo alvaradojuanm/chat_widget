@@ -62,5 +62,3 @@ class ChatController(http.Controller):
             
         except Exception as e:
             return json.dumps({'error': str(e)})
-
-# ===========================================
