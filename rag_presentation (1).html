@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG: La Revolución de la IA Generativa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .presentation-container {
+            max-width: 1200px;
+            width: 95%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slide {
+            display: none;
+            padding: 60px 40px;
+            min-height: 700px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .slide h1 {
+            font-size: 3em;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .slide h2 {
+            font-size: 2.5em;
+            color: #34495e;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .slide h3 {
+            font-size: 1.8em;
+            color: #2980b9;
+            margin-bottom: 20px;
+        }
+        
+        .slide p {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #a8e6cf 0%, #dcedc8 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #27ae60;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .evolution-timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .timeline-number {
+            background: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .use-case-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .use-case-card:hover {
+            border-color: #3498db;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .use-case-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+        }
+        
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0,0,0,0.1);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #3498db;
+            transition: width 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .intro-visual {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .intro-visual::before {
+            content: "🤖";
+            font-size: 6em;
+            display: block;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 1.1em;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .opportunities-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .opportunity-card {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 25px;
+            border-radius: 15px;
+            color: #2c3e50;
+        }
+        
+        .opportunity-card h4 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .cta-section h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="slide-counter" id="slideCounter">1 / 12</div>
+        
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>RAG: La Revolución Silenciosa de la IA</h1>
+            <div class="intro-visual"></div>
+            <div class="highlight">
+                <h3>De técnica básica a arquitectura empresarial</h3>
+                <p style="text-align: center; font-size: 1.4em;">Cómo una simple idea cambió para siempre la inteligencia artificial generativa</p>
+            </div>
+            <p style="text-align: center; font-size: 1.2em; margin-top: 40px;">
+                <strong>Ing. Juan Manuel Alvarado Medina</strong><br>
+                Universidad Politécnica Territorial del Estado Aragua
+            </p>
+        </div>
+
+        <!-- Slide 2: El Problema -->
+        <div class="slide">
+            <h2>¿Qué problema resuelve RAG?</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">😵</span>
+                    <div>Alucinaciones en IA</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">📅</span>
+                    <div>Información desactualizada</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">🔒</span>
+                    <div>Falta de especialización</div>
+                </div>
+            </div>
+            <div class="highlight">
+                <h3>Imagina que ChatGPT pudiera:</h3>
+                <p>✅ Acceder a TUS documentos en tiempo real</p>
+                <p>✅ Responder con información siempre actualizada</p>
+                <p>✅ Citar fuentes específicas y confiables</p>
+                <p>✅ Adaptarse a tu sector o empresa</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Crecimiento Explosivo -->
+        <div class="slide">
+            <h2>El Crecimiento Explosivo</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">31%</span>
+                    <div>Adopción en 2024</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">51%</span>
+                    <div>Proyección 2025</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">65%</span>
+                    <div>Crecimiento anual</div>
+                </div>
+            </div>
+            <div class="highlight">
+                <h3>¿Por qué este crecimiento?</h3>
+                <p>🚀 <strong>Resultados tangibles:</strong> Reducción de 40-60% en respuestas incorrectas</p>
+                <p>💰 <strong>ROI comprobado:</strong> Mejoras de 35-50% en precisión</p>
+                <p>🔧 <strong>Implementación práctica:</strong> Casos de uso reales en todas las industrias</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Cómo Funciona -->
+        <div class="slide">
+            <h2>¿Cómo funciona RAG?</h2>
+            <div class="evolution-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div>
+                        <h3>📚 Indexación</h3>
+                        <p>Convierte documentos en vectores matemáticos que la IA puede "entender"</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div>
+                        <h3>🔍 Búsqueda</h3>
+                        <p>Encuentra información relevante usando similitud semántica</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div>
+                        <h3>⚡ Generación</h3>
+                        <p>Crea respuestas basadas en información real y actualizada</p>
+                    </div>
+                </div>
+            </div>
+            <div class="highlight">
+                <p style="text-align: center; font-size: 1.4em;">
+                    <strong>Resultado:</strong> IA que habla con conocimiento real, no solo con "memoria"
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Las 7 Evoluciones -->
+        <div class="slide">
+            <h2>Las 7 Evoluciones de RAG</h2>
+            <div class="evolution-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div><strong>Naive RAG:</strong> La versión básica - rápida pero limitada</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div><strong>Retrieve-and-Rerank:</strong> Mejor selección de información</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div><strong>Multimodal RAG:</strong> Texto + imágenes + audio + video</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div><strong>Graph RAG:</strong> Entiende relaciones y conexiones</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">5</div>
+                    <div><strong>Hybrid RAG:</strong> Combina múltiples estrategias</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">6</div>
+                    <div><strong>Agentic RAG:</strong> Toma decisiones inteligentes</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">7</div>
+                    <div><strong>Multi-Agent RAG:</strong> Múltiples "cerebros" trabajando juntos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Casos de Uso Reales -->
+        <div class="slide">
+            <h2>Casos de Uso Transformadores</h2>
+            <div class="use-case-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">🏦</div>
+                    <h3>Finanzas</h3>
+                    <p><strong>45%</strong> reducción en mora imprevista</p>
+                    <p><strong>30%</strong> mejora en aprobaciones</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">🏥</div>
+                    <h3>Salud</h3>
+                    <p><strong>35%</strong> mejora en precisión diagnóstica</p>
+                    <p><strong>50%</strong> reducción en tiempo de investigación</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">⚖️</div>
+                    <h3>Legal</h3>
+                    <p><strong>70%</strong> reducción en tiempo de investigación</p>
+                    <p><strong>60%</strong> mejora en exhaustividad</p>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">🏭</div>
+                    <h3>Manufactura</h3>
+                    <p><strong>25%</strong> reducción en inventarios</p>
+                    <p><strong>40%</strong> mejora en tiempo de respuesta</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Comparación de Rendimiento -->
+        <div class="slide">
+            <h2>Rendimiento por Arquitectura</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Arquitectura</th>
+                        <th>Tiempo Implementación</th>
+                        <th>Precisión</th>
+                        <th>Alucinaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Naive RAG</td>
+                        <td>&lt;1 semana</td>
+                        <td>60%-70%</td>
+                        <td>25%-35%</td>
+                    </tr>
+                    <tr>
+                        <td>Retrieve-and-Rerank</td>
+                        <td>2-3 semanas</td>
+                        <td>75%-85%</td>
+                        <td>15%-25%</td>
+                    </tr>
+                    <tr>
+                        <td>Multimodal RAG</td>
+                        <td>1-2 meses</td>
+                        <td>80%-90%</td>
+                        <td>Casos de uso +300%</td>
+                    </tr>
+                    <tr>
+                        <td>Multi-Agent RAG</td>
+                        <td>+6 meses</td>
+                        <td>Capacidades +500%</td>
+                        <td>Complejidad máxima</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="highlight">
+                <p><strong>Lección clave:</strong> Mayor complejidad = mejor rendimiento, pero requiere más tiempo y recursos</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Factores de Éxito -->
+        <div class="slide">
+            <h2>Factores Críticos de Éxito</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">📊</span>
+                    <div><strong>Calidad de Datos</strong><br>40-60% del tiempo en curación</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">👥</span>
+                    <div><strong>Expertise Técnico</strong><br>Equipos multidisciplinarios</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">🛡️</span>
+                    <div><strong>Gobernanza</strong><br>Ética desde el diseño</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">🔗</span>
+                    <div><strong>Integración</strong><br>Sistemas empresariales</div>
+                </div>
+            </div>
+            <div class="highlight">
+                <h3>💡 Consejo para implementadores:</h3>
+                <p>No subestimes la importancia de los datos de calidad. El mejor algoritmo con datos mediocres dará resultados mediocres.</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Oportunidades para Venezuela -->
+        <div class="slide">
+            <h2>Oportunidades para Venezuela</h2>
+            <div class="opportunities-list">
+                <div class="opportunity-card">
+                    <h4>🔬 Investigación Aplicada</h4>
+                    <p>• RAG multilingüe (español-inglés-portugués)</p>
+                    <p>• Especialización en sectores nacionales</p>
+                    <p>• IA responsable y ética</p>
+                </div>
+                <div class="opportunity-card">
+                    <h4>🎓 Formación Especializada</h4>
+                    <p>• Postgrados en IA Generativa</p>
+                    <p>• Certificaciones técnicas</p>
+                    <p>• Formación ejecutiva</p>
+                </div>
+                <div class="opportunity-card">
+                    <h4>🤝 Transferencia Tecnológica</h4>
+                    <p>• Pilotos gubernamentales</p>
+                    <p>• Colaboraciones empresa-universidad</p>
+                    <p>• Incubación de startups</p>
+                </div>
+                <div class="opportunity-card">
+                    <h4>🌎 Colaboración Internacional</h4>
+                    <p>• Redes universitarias</p>
+                    <p>• Alianzas latinoamericanas</p>
+                    <p>• Investigación colaborativa</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: El Momento es Ahora -->
+        <div class="slide">
+            <h2>El Momento es AHORA</h2>
+            <div class="highlight">
+                <h3>🚀 Ventana de oportunidad histórica</h3>
+                <p>La tecnología RAG está en su momento de inflexión. Las universidades que actúen ahora tendrán ventaja competitiva por años.</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">⚡</span>
+                    <div><strong>Adopción Acelerada</strong><br>De nicho a mainstream</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">🎯</span>
+                    <div><strong>Especialización</strong><br>Nichos sin explorar</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">🌟</span>
+                    <div><strong>Liderazgo Regional</strong><br>Posicionamiento estratégico</div>
+                </div>
+            </div>
+            <div class="cta-section">
+                <h3>¿Qué puedes hacer HOY?</h3>
+                <p>• Inicia un proyecto piloto en tu área</p>
+                <p>• Forma un equipo multidisciplinario</p>
+                <p>• Conecta con la comunidad RAG</p>
+                <p>• Experimenta con herramientas disponibles</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Futuro de RAG -->
+        <div class="slide">
+            <h2>El Futuro de RAG</h2>
+            <div class="evolution-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">🤖</div>
+                    <div>
+                        <h3>Mayor Autonomía</h3>
+                        <p>Sistemas que se auto-mejoran y adaptan</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">👥</div>
+                    <div>
+                        <h3>Orquestación Multi-Agente</h3>
+                        <p>Equipos de IA especializados trabajando juntos</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">🔗</div>
+                    <div>
+                        <h3>Integración Sistémica Total</h3>
+                        <p>RAG como infraestructura empresarial estándar</p>
+                    </div>
+                </div>
+            </div>
+            <div class="highlight">
+                <h3>🔮 Predicción:</h3>
+                <p>En 3 años, RAG será tan común como las bases de datos hoy. Las organizaciones que no lo adopten quedarán obsoletas.</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusión -->
+        <div class="slide">
+            <h1>¡Gracias!</h1>
+            <div class="cta-section">
+                <h3>RAG no es solo tecnología, es transformación</h3>
+                <p>De técnica específica a infraestructura crítica</p>
+                <p>De experimento a necesidad empresarial</p>
+                <p>De presente a futuro inevitable</p>
+            </div>
+            <div class="highlight">
+                <h3>🚀 Tu turno de actuar:</h3>
+                <p>• Experimenta con RAG en tu área</p>
+                <p>• Únete a la revolución de la IA</p>
+                <p>• Sé parte del cambio, no víctima de él</p>
+            </div>
+            <p style="text-align: center; font-size: 1.4em; margin-top: 40px;">
+                <strong>¿Preguntas? ¡Conversemos!</strong><br>
+                alvaradojuanm@gmail.com
+            </p>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ Anterior</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Siguiente ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Update slide counter
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function changeSlide(n) {
+            showSlide(currentSlide + n);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
